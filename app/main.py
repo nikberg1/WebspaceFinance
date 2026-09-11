@@ -1,7 +1,7 @@
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -26,6 +26,12 @@ app.mount("/static", StaticFiles(directory=WEBAPP), name="static")
 @app.get("/")
 def index():
     return FileResponse(WEBAPP / "index.html")
+
+
+@app.head("/")
+@app.head("/health")
+def health_head():
+    return Response(status_code=200)
 
 
 @app.get("/health")
