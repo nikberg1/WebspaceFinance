@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Касса студии</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="top">
+      <div>
+        <p class="eyebrow">Студия · только сотрудники</p>
+        <h1>Касса</h1>
+      </div>
+      <div class="month-nav">
+        <button id="prevMonth" type="button" aria-label="Предыдущий месяц">‹</button>
+        <span id="monthLabel">—</span>
+        <button id="nextMonth" type="button" aria-label="Следующий месяц">›</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <p class="hero-label">Всего на счетах</p>
+      <p class="hero-sum" id="totalBalance">0 ₽</p>
+      <p class="hero-sub">нажмите на счёт, чтобы поставить фактический остаток</p>
+    </section>
+
+    <section id="accounts" class="accounts"></section>
+
+    <section class="stats">
+      <article>
+        <span>Пришло за месяц</span>
+        <strong id="paidIncome">0 ₽</strong>
+      </article>
+      <article>
+        <span>Ушло за месяц</span>
+        <strong id="paidExpense" class="red">0 ₽</strong>
+      </article>
+      <article>
+        <span>Ещё придёт</span>
+        <strong id="expectedIn">0 ₽</strong>
+      </article>
+      <article>
+        <span>Ещё заплатить</span>
+        <strong id="expectedOut" class="red">0 ₽</strong>
+      </article>
+    </section>
+
+    <section class="toolbar">
+      <h2>Операции</h2>
+      <div class="actions">
+        <button class="btn ghost" id="addIncome" type="button">+ Приход</button>
+        <button class="btn danger" id="addExpense" type="button">+ Расход</button>
+      </div>
+    </section>
+
+    <section id="list" class="list"></section>
+    <p id="empty" class="empty hidden">Пока пусто. Добавьте первый платёж.</p>
+    <p id="error" class="error hidden"></p>
+  </div>
+
+  <div id="sheet" class="sheet hidden">
+    <div class="sheet-card">
+      <div class="sheet-handle"></div>
+      <h3 id="sheetTitle">Новый приход</h3>
+      <form id="form">
+        <label>
+          Счёт
+          <select id="account"></select>
+        </label>
+        <label>
+          Сумма, ₽
+          <input id="amount" inputmode="numeric" pattern="[0-9]*" placeholder="150000" required />
+        </label>
+        <label>
+          Статья
+          <select id="category"></select>
+        </label>
+        <label>
+          Дата
+          <input id="opDate" type="date" required />
+        </label>
+        <label>
+          Статус
+          <select id="status">
+            <option value="paid">Оплачено</option>
+            <option value="plan">План</option>
+          </select>
+        </label>
+        <label>
+          Комментарий
+          <input id="comment" maxlength="140" placeholder="От клиента / подрядчику" />
+        </label>
+        <div class="sheet-actions">
+          <button type="button" class="btn ghost" id="cancelForm">Отмена</button>
+          <button type="submit" class="btn danger" id="submitForm">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="balanceSheet" class="sheet hidden">
+    <div class="sheet-card">
+      <div class="sheet-handle"></div>
+      <h3 id="balanceTitle">Остаток</h3>
+      <form id="balanceForm">
+        <label>
+          Сколько сейчас на счёте, ₽
+          <input id="balanceAmount" inputmode="numeric" placeholder="0" required />
+        </label>
+        <div class="sheet-actions">
+          <button type="button" class="btn ghost" id="cancelBalance">Отмена</button>
+          <button type="submit" class="btn danger">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
