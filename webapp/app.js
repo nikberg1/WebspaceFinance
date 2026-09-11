@@ -29,11 +29,15 @@ function initData() {
 }
 
 async function api(path, options = {}) {
-  const res = await fetch(path, {
+  const auth = initData();
+  const sep = path.includes("?") ? "&" : "?";
+  const url = `${path}${sep}_auth=${encodeURIComponent(auth)}`;
+  const res = await fetch(url, {
     ...options,
     headers: {
       "Content-Type": "application/json",
-      "X-Telegram-Init-Data": initData(),
+      "Authorization": `tma ${auth}`,
+      "X-Telegram-Init-Data": auth,
       ...(options.headers || {}),
     },
   });
